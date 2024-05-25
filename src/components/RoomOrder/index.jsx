@@ -1,8 +1,27 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import './style.css';
+import React from "react";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import "./style.css";
 
 export const RoomOrder = ({ selectedRoomData }) => {
+  const [dateOd, setDateOd] = useState("");
+  const [dateDo, setDateDo] = useState("");
+  const [pocetOsob, setPocetOsob] = useState("");
+  let celkovaCena = null;
+
+  if (dateOd !== "" && dateDo !== "" && pocetOsob !== "") {
+    const date1 = dayjs(dateOd);
+    const date2 = dayjs(dateDo);
+    const pocetDnu = date2.diff(date1, "days");
+    celkovaCena = pocetDnu * Number(pocetOsob) * selectedRoomData.price;
+  }
+
+  const handleSubmit = () => {
+    return alert("hotovo!");
+  };
+
+  console.log(celkovaCena);
+
   return (
     <section className="light">
       <div className="container">
@@ -24,19 +43,31 @@ export const RoomOrder = ({ selectedRoomData }) => {
                 type="date"
                 id="field1"
                 className="field-input"
-                required
-                pattern="\d{4}-\d{2}-\d{2}"
+                onChange={(event) => setDateOd(event.target.value)}
+                value={dateOd}
               />
 
               <label htmlFor="field1" className="field-label">
                 Do:
               </label>
-              <input id="field1" className="field-input" type="date" />
+              <input
+                id="field1"
+                className="field-input"
+                type="date"
+                onChange={(event) => setDateDo(event.target.value)}
+                value={dateDo}
+              />
 
               <label htmlFor="field1" className="field-label">
                 Počet osob:
               </label>
-              <input id="field1" className="field-input" type="text" />
+              <input
+                id="field1"
+                className="field-input"
+                type="text"
+                onChange={(event) => setPocetOsob(event.target.value)}
+                value={pocetOsob}
+              />
 
               <label htmlFor="select" className="field-label">
                 Stravování:
@@ -71,6 +102,10 @@ export const RoomOrder = ({ selectedRoomData }) => {
                 Telefon:
               </label>
               <input id="field1" className="field-input" type="tel" />
+            </div>
+            <div className="cena">
+              Celková cena za pobyt:
+              {celkovaCena && " " + celkovaCena+" Kč"}
             </div>
             <button className="wide">Odeslat objednávku</button>
           </form>
