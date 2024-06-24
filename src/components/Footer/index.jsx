@@ -1,4 +1,4 @@
-import './style.css';
+import "./style.css";
 
 export const Footer = () => {
   return (
@@ -17,7 +17,7 @@ export const Footer = () => {
             </a>
           </p>
         </div>
-        <img src="img/mapa.png" />
+        <img src="../img/mapa.png" />
       </div>
     </section>
   );
