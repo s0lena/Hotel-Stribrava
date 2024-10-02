@@ -1,6 +1,6 @@
-import React from 'react';
-import './style.css';
-import { OneRoom } from '../OneRoom';
+import React from "react";
+import "./style.css";
+import { OneRoom } from "../OneRoom";
 
 export const Rooms = ({ roomList, onSelect }) => {
   return (

@@ -7,20 +7,35 @@ export const RoomOrder = ({ selectedRoomData }) => {
   const [dateOd, setDateOd] = useState("");
   const [dateDo, setDateDo] = useState("");
   const [pocetOsob, setPocetOsob] = useState("");
+  const [pet, setPet] = useState(false);
+  const [kid, setKid] = useState(false);
+
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
   let celkovaCena = null;
 
   if (dateOd !== "" && dateDo !== "" && pocetOsob !== "") {
     const date1 = dayjs(dateOd);
     const date2 = dayjs(dateDo);
     const pocetDnu = date2.diff(date1, "days");
+
     celkovaCena = pocetDnu * Number(pocetOsob) * selectedRoomData.price;
+    if (pet) {
+      celkovaCena =
+        celkovaCena +
+        (pocetDnu * Number(pocetOsob) * selectedRoomData.price) / 4;
+    }
+    if (kid) {
+      celkovaCena =
+        celkovaCena +
+        (pocetDnu * Number(pocetOsob) * selectedRoomData.price) / 2;
+    }
   }
 
   const handleSubmit = () => {
-    return alert("hotovo!");
+    alert("Hotovo!");
   };
-
-  console.log(celkovaCena);
 
   return (
     <section className="light">
@@ -34,7 +49,7 @@ export const RoomOrder = ({ selectedRoomData }) => {
             <img src={selectedRoomData.img} />
             <p>{selectedRoomData.description}</p>
           </div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-fields">
               <label htmlFor="field1" className="field-label">
                 Od:
@@ -82,12 +97,22 @@ export const RoomOrder = ({ selectedRoomData }) => {
               <label htmlFor="check1" className="field-label">
                 Domáci mazlíček:
               </label>
-              <input id="check1" className="field-input" type="checkbox" />
+              <input
+                id="check1"
+                className="field-input"
+                type="checkbox"
+                onChange={() => setPet(!pet)}
+              />
 
               <label htmlFor="check1" className="field-label">
                 Přístýlka pro děti:
               </label>
-              <input id="check1" className="field-input" type="checkbox" />
+              <input
+                id="check1"
+                className="field-input"
+                type="checkbox"
+                onChange={() => setKid(!kid)}
+              />
 
               <label htmlFor="check1" className="field-label">
                 Bezbariérový přístup:
@@ -97,15 +122,25 @@ export const RoomOrder = ({ selectedRoomData }) => {
               <label htmlFor="field1" className="field-label">
                 E-mail:
               </label>
-              <input id="field1" className="field-input" type="email" />
+              <input
+                id="field1"
+                className="field-input"
+                type="email"
+                onChange={(event) => setCustomerEmail(event.target.value)}
+              />
               <label htmlFor="field1" className="field-label">
                 Telefon:
               </label>
-              <input id="field1" className="field-input" type="tel" />
+              <input
+                id="field1"
+                className="field-input"
+                type="tel"
+                onChange={(event) => setPhone(event.target.value)}
+              />
             </div>
             <div className="cena">
               Celková cena za pobyt:
-              {celkovaCena && " " + celkovaCena+" Kč"}
+              {celkovaCena && " " + celkovaCena + " Kč"}
             </div>
             <button className="wide">Odeslat objednávku</button>
           </form>
